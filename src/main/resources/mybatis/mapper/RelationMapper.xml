@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seu.universe.mapper.RelationMapper">
+
+    <resultMap id="relationResultMap" type="com.seu.universe.entity.Relation">
+        <result property="relationId" column="relation_id" />
+        <result property="time" column="relation_time" />
+        <result property="relationType" column="relation_type" />
+        <result property="relationGroup" column="relation_groupname" />
+        <result property="userId" column="user_id" />
+        <result property="userById" column="user_byid" />
+    </resultMap>
+
+    <insert id="addRelation" parameterType="com.seu.universe.entity.Relation">
+        INSERT INTO
+        t_relation(relation_time, relation_type, relation_groupname, user_id, user_byid)
+        VALUES (#{time}, #{relationType}, #{relationGroup}, #{userId}, #{userById})
+    </insert>
+
+    <select id="getRelationByUserId" parameterType="Long" resultMap="relationResultMap">
+        select relation_id, relation_time, relation_type, relation_groupname, user_id, user_byid
+        from t_relation
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getRelationBetweenUsers" parameterType="Long" resultMap="relationResultMap">
+        select relation_id, relation_time, relation_type, relation_groupname, user_id, user_byid
+        from t_relation
+        WHERE user_id = #{userId} AND user_byid = #{userById}
+    </select>
+
+</mapper>

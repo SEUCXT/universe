@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seu.universe.mapper.MessageMapper">
+
+    <resultMap id="messageResultMap" type="com.seu.universe.entity.Message">
+        <result property="messageId" column="message_id" />
+        <result property="time" column="message_time" />
+        <result property="messageType" column="message_type" />
+        <result property="messageInfo" column="message_info" />
+        <result property="collectNum" column="message_collectnum" />
+        <result property="commentNum" column="message_commentnum" />
+        <result property="likeNum" column="message_likenum" />
+        <result property="transpondNum" column="message_transpondnum" />
+        <result property="readNum" column="message_readnum" />
+        <result property="label" column="message_label" />
+        <result property="pictureId" column="picture_id" />
+        <result property="userId" column="user_id" />
+    </resultMap>
+
+    <insert id="publishMessage">
+        INSERT INTO
+        ${tableName}(message_type, message_info, message_time, message_collectnum, message_readnum, message_commentnum, message_likenum, message_transpondnum, message_label, picture_id, user_id)
+        VALUES (#{messageType}, #{messageInfo}, #{time}, #{collectNum}, #{readNum}, #{commentNum}, #{likeNum}, #{transpondNum}, #{label}, #{pictureId}, #{userId})
+    </insert>
+
+    <select id="getMessageByMessageId" resultMap="messageResultMap">
+        select
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        from
+        ${tableName}
+        where
+        message_id = #{messageId}
+    </select>
+
+    <select id="getRelatedMessageWithPage" resultMap="messageResultMap">
+        select
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        from
+        ${tableName}
+        order by message_time desc
+        limit #{start}, #{limit}
+    </select>
+
+    <select id="getMessageByUserIdWithPage" resultMap="messageResultMap">
+        select
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        from
+        ${tableName}
+        where
+        user_id = #{userId}
+        order by message_time desc
+        limit #{start}, #{limit}
+    </select>
+
+    <delete id="deleteMessage">
+        delete from
+        ${tableName}
+        where
+        message_id = #{message_id}
+    </delete>
+
+</mapper>
