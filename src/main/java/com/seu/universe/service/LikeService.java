@@ -7,6 +7,7 @@ public interface LikeService {
 
     /**
      * 添加点赞（直接写数据库）
+     *
      * @param messageId
      * @param userId
      * @return
@@ -15,6 +16,7 @@ public interface LikeService {
 
     /**
      * 获取状态的点赞数
+     *
      * @param messageId
      * @return
      */
@@ -22,6 +24,7 @@ public interface LikeService {
 
     /**
      * 通过redis的方式点赞
+     *
      * @param messageId
      * @param messageUserId
      * @param likeUserId

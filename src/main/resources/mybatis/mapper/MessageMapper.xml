@@ -17,17 +17,18 @@
         <result property="label" column="message_label" />
         <result property="pictureId" column="picture_id" />
         <result property="userId" column="user_id" />
+        <result property="status" column="status" />
     </resultMap>
 
     <insert id="publishMessage">
         INSERT INTO
-        ${tableName}(message_type, message_info, message_time, message_collectnum, message_readnum, message_commentnum, message_likenum, message_transpondnum, message_label, picture_id, user_id)
-        VALUES (#{messageType}, #{messageInfo}, #{time}, #{collectNum}, #{readNum}, #{commentNum}, #{likeNum}, #{transpondNum}, #{label}, #{pictureId}, #{userId})
+        ${tableName}(message_type, message_info, message_time, message_collectnum, message_readnum, message_commentnum, message_likenum, message_transpondnum, message_label, picture_id, user_id, status)
+        VALUES (#{messageType}, #{messageInfo}, #{time}, #{collectNum}, #{readNum}, #{commentNum}, #{likeNum}, #{transpondNum}, #{label}, #{pictureId}, #{userId}, #{status})
     </insert>
 
     <select id="getMessageByMessageId" resultMap="messageResultMap">
         select
-        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id,status
         from
         ${tableName}
         where
@@ -36,7 +37,7 @@
 
     <select id="getRelatedMessageWithPage" resultMap="messageResultMap">
         select
-        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id,status
         from
         ${tableName}
         order by message_time desc
@@ -45,7 +46,7 @@
 
     <select id="getMessageByUserIdWithPage" resultMap="messageResultMap">
         select
-        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id
+        message_id,message_time,message_type,message_info,message_collectnum,message_commentnum,message_likenum,message_transpondnum,message_readnum,message_label,picture_id,user_id,status
         from
         ${tableName}
         where

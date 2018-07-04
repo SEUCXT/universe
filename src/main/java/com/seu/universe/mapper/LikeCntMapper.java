@@ -12,7 +12,7 @@ public interface LikeCntMapper {
     int addMessageLikeCnt(@Param("messageId") long messageId,
                           @Param("likeCnt") long likeCnt);
 
-     int updateMessageLikeCnt(@Param("messageId") long messageId,
-                              @Param("newLikeCnt") long newLikeCnt);
+    int updateMessageLikeCnt(@Param("messageId") long messageId,
+                             @Param("newLikeCnt") long newLikeCnt);
 
 }

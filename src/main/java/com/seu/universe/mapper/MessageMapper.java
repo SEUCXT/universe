@@ -21,7 +21,8 @@ public interface MessageMapper {
                         @Param("transpondNum") int transpondNum,
                         @Param("label") String label,
                         @Param("pictureId") long pictureId,
-                        @Param("userId") long userId);
+                        @Param("userId") long userId,
+                        @Param("status") int status);
 
     Message getMessageByMessageId(@Param("tableName") String tableName,
                                   @Param("messageId") long messageId);

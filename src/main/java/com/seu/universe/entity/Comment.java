@@ -6,11 +6,12 @@ import java.util.Objects;
 public class Comment {
 
     private long commentId;
-    private String commentInfo;
+    private String content;
     private Timestamp time;
-    private int commentInfoStatus;
-    private long userId;
+    private int status;
+    private long fromUserId;
     private long messageId;
+    private long toUserId;
 
     public long getCommentId() {
         return commentId;
@@ -20,12 +21,12 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public String getCommentInfo() {
-        return commentInfo;
+    public String getContent() {
+        return content;
     }
 
-    public void setCommentInfo(String commentInfo) {
-        this.commentInfo = commentInfo;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Timestamp getTime() {
@@ -36,20 +37,20 @@ public class Comment {
         this.time = time;
     }
 
-    public int getCommentInfoStatus() {
-        return commentInfoStatus;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCommentInfoStatus(int commentInfoStatus) {
-        this.commentInfoStatus = commentInfoStatus;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getFromUserId() {
+        return fromUserId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setFromUserId(long fromUserId) {
+        this.fromUserId = fromUserId;
     }
 
     public long getMessageId() {
@@ -60,34 +61,44 @@ public class Comment {
         this.messageId = messageId;
     }
 
+    public long getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(long toUserId) {
+        this.toUserId = toUserId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
         return commentId == comment.commentId &&
-                commentInfoStatus == comment.commentInfoStatus &&
-                userId == comment.userId &&
+                status == comment.status &&
+                fromUserId == comment.fromUserId &&
                 messageId == comment.messageId &&
-                Objects.equals(commentInfo, comment.commentInfo) &&
+                toUserId == comment.toUserId &&
+                Objects.equals(content, comment.content) &&
                 Objects.equals(time, comment.time);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(commentId, commentInfo, time, commentInfoStatus, userId, messageId);
+        return Objects.hash(commentId, content, time, status, fromUserId, messageId, toUserId);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
                 "commentId=" + commentId +
-                ", commentInfo='" + commentInfo + '\'' +
+                ", content='" + content + '\'' +
                 ", time=" + time +
-                ", commentInfoStatus=" + commentInfoStatus +
-                ", userId=" + userId +
+                ", status=" + status +
+                ", fromUserId=" + fromUserId +
                 ", messageId=" + messageId +
+                ", toUserId=" + toUserId +
                 '}';
     }
 }

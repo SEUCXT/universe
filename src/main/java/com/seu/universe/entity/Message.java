@@ -16,6 +16,7 @@ public class Message {
     private String label;
     private long pictureId;
     private long userId;
+    private int status; // 0 自己发的状态；1 朋友发的状态； 2 转发的状态
 
     public long getMessageId() {
         return messageId;
@@ -113,6 +114,14 @@ public class Message {
         this.userId = userId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -126,6 +135,7 @@ public class Message {
                 transpondNum == message.transpondNum &&
                 pictureId == message.pictureId &&
                 userId == message.userId &&
+                status == message.status &&
                 Objects.equals(messageType, message.messageType) &&
                 Objects.equals(messageInfo, message.messageInfo) &&
                 Objects.equals(time, message.time) &&
@@ -135,7 +145,7 @@ public class Message {
     @Override
     public int hashCode() {
 
-        return Objects.hash(messageId, messageType, messageInfo, time, collectNum, commentNum, readNum, likeNum, transpondNum, label, pictureId, userId);
+        return Objects.hash(messageId, messageType, messageInfo, time, collectNum, commentNum, readNum, likeNum, transpondNum, label, pictureId, userId, status);
     }
 
     @Override
@@ -153,6 +163,7 @@ public class Message {
                 ", label='" + label + '\'' +
                 ", pictureId=" + pictureId +
                 ", userId=" + userId +
+                ", status=" + status +
                 '}';
     }
 }

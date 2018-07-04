@@ -13,6 +13,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.View;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,7 @@ public class MessageServiceImpl implements MessageService {
         message.setPictureId(pictureId);
         message.setUserId(userId);
         messageMapper.publishMessage(tableName.toString(), messageType, messageInfo, time, 0,
-                0, 0, 0, 0, label, pictureId, userId);
+                0, 0, 0, 0, label, pictureId, userId, 0);
         this.rabbitTemplate.convertAndSend(Constants.PUBLIC_MESSAGE_TOPIC, JSON.toJSON(message).toString());
         vo.set(ViewObject.ERROR, 0).set(ViewObject.MESSAGE, "状态发布成功！");
         return vo;
@@ -104,6 +105,21 @@ public class MessageServiceImpl implements MessageService {
         Message message = messageMapper.getMessageByMessageId(tableName, messageId);
         rabbitTemplate.convertAndSend(Constants.DELETE_MESSAGE_TOPIC, JSON.toJSON(message).toString());
         vo.set(ViewObject.ERROR, 0).set(ViewObject.MESSAGE, "消息删除成功！");
+        return vo;
+    }
+
+    @Override
+    public ViewObject transpondMessage(long messageId, long userId) {
+        ViewObject vo = new ViewObject();
+        User user = userMapper.getUserByUserId(userId);
+        String email = user.getEmail();
+        StringBuilder tableName = new StringBuilder();
+        String tmp = email.substring(0, email.lastIndexOf('@'));
+        tableName.append("t_").append(tmp).append("_message");
+        Message message = messageMapper.getMessageByMessageId(tableName.toString(), messageId);
+        messageMapper.publishMessage(tableName.toString(), message.getMessageType(), message.getMessageInfo(), message.getTime(), 0,
+                0, 0, 0, 0, message.getLabel(), message.getPictureId(), message.getUserId(), 2);
+        vo.set(ViewObject.ERROR, 0).set(ViewObject.MESSAGE, "消息转发成功！");
         return vo;
     }
 

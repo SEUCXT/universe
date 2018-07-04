@@ -72,7 +72,7 @@ public class RabbimqListener {
             String tmp = email.substring(0, email.lastIndexOf('@'));
             tableName.append("t_").append(tmp).append("_message");
             messageMapper.publishMessage(tableName.toString(), message.getMessageType(), message.getMessageInfo(), message.getTime(), 0,
-                    0, 0, 0, 0, message.getLabel(), message.getPictureId(), message.getUserId());
+                    0, 0, 0, 0, message.getLabel(), message.getPictureId(), message.getUserId(), 1);
         }
     }
 
