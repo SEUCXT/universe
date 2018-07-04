@@ -10,6 +10,10 @@ public class Constants {
 
     public static final String DELETE_MESSAGE_TOPIC = "delete_message_topic";
 
+    public static final String TEST_TOPIC = "test_topic";
+
+    public static final String LIKE_TOPIC = "like_topic";
+
     public static final String WEB_ADDR = "118.25.138.163:80/";
 
 }

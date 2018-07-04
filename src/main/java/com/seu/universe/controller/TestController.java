@@ -16,11 +16,13 @@ public class TestController {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
+
     @RequestMapping("/sendMq")
     @ResponseBody
     public void send() {
         String context = "hello " + new Date();
         System.out.println("Sender : " + context);
-        this.rabbitTemplate.convertAndSend(Constants.EMAIL_TOPIC, context);
+        this.rabbitTemplate.convertAndSend(Constants.TEST_TOPIC, context);
     }
+
 }

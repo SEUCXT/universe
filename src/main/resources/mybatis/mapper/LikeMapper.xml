@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seu.universe.mapper.LikeMapper">
+
+    <resultMap id="likeResultMap" type="com.seu.universe.entity.Like">
+        <result property="likeId" column="like_id" />
+        <result property="likeTime" column="like_time" />
+        <result property="userId" column="user_id" />
+        <result property="messageId" column="message_id" />
+    </resultMap>
+
+    <insert id="addLike">
+        INSERT INTO
+        t_like(like_time, user_id, message_id)
+        VALUES (#{likeTime}, #{userId}, #{messageId})
+    </insert>
+
+    <select id="getLike" resultMap="likeResultMap">
+        select like_id, like_time, user_id, message_id
+        from t_like
+        where message_id = #{messageId} and user_id = #{userId}
+    </select>
+
+    <delete id="cancelLike">
+        delete from t_like
+        where message_id = #{messageId} and user_id = #{message_id};
+    </delete>
+
+</mapper>

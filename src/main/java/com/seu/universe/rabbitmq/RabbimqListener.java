@@ -1,10 +1,13 @@
 package com.seu.universe.rabbitmq;
 
 import com.alibaba.fastjson.JSON;
+import com.rabbitmq.client.Channel;
 import com.seu.universe.config.Constants;
+import com.seu.universe.entity.Like;
 import com.seu.universe.entity.Message;
 import com.seu.universe.entity.Relation;
 import com.seu.universe.entity.User;
+import com.seu.universe.mapper.LikeMapper;
 import com.seu.universe.mapper.MessageMapper;
 import com.seu.universe.mapper.RelationMapper;
 import com.seu.universe.mapper.UserMapper;
@@ -31,6 +34,15 @@ public class RabbimqListener {
 
     @Autowired
     private MessageMapper messageMapper;
+
+    @Autowired
+    private LikeMapper likeMapper;
+
+    @RabbitHandler
+    @RabbitListener(queues = Constants.TEST_TOPIC)
+    public void testAck(String email, org.springframework.amqp.core.Message message, Channel channel) throws Exception{
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
 
     @RabbitHandler
     @RabbitListener(queues = Constants.EMAIL_TOPIC)
@@ -75,5 +87,13 @@ public class RabbimqListener {
             String tableName = TableUtil.getTableName(email);
             messageMapper.deleteMessage(tableName,message.getMessageId());
         }
+    }
+
+    @RabbitHandler
+    @RabbitListener(queues = Constants.LIKE_TOPIC)
+    public void pushLikeMessage(String info) {
+        Like like = JSON.parseObject(info, Like.class);
+
+        //Message message = messageMapper.getMessageByMessageId(like.getMessageId());
     }
 }
