@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seu.universe.mapper.PictureMapper">
+
+    <resultMap id="pictureResultMap" type="com.seu.universe.entity.Picture">
+        <result property="pictureId" column="picture_id" />
+        <result property="time" column="picture_time" />
+        <result property="pictureUrl" column="picture_url" />
+        <result property="userId" column="user_id" />
+    </resultMap>
+
+    <insert id="addPicture">
+        INSERT INTO
+        t_picture(picture_time, picture_url, user_id)
+        VALUES (#{time}, #{pictureUrl}, #{userId})
+    </insert>
+
+    <select id="getPictureById" parameterType="Long" resultMap="pictureResultMap">
+        select picture_id, picture_time, picture_url, user_id
+        from t_picture
+        where picture_id = #{pictureId}
+    </select>
+
+    <select id="getPictureByUrl" parameterType="String" resultMap="pictureResultMap">
+        select picture_id, picture_time, picture_url, user_id
+        from t_picture
+        where picture_url = #{pictureUrl}
+    </select>
+
+    <delete id="deletePicture">
+        delete from t_picture
+        where picture_id = #{pictureId};
+    </delete>
+
+</mapper>
