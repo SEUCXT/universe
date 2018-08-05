@@ -38,4 +38,16 @@ public class PictureServiceImpl implements PictureService {
         vo.set(ViewObject.DATA, 0).set(ViewObject.MESSAGE, "删除图片成功！");
         return vo;
     }
+
+    @Override
+    public Picture getPictureById(long pictureId) {
+        Picture picture = pictureMapper.getPictureById(pictureId);
+        return picture;
+    }
+
+    @Override
+    public Picture getPictureByUrl(String pictureUrl) {
+        Picture picture = pictureMapper.getPictureByUrl(pictureUrl);
+        return picture;
+    }
 }

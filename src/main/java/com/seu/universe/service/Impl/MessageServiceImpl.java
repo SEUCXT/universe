@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.View;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,10 @@ public class MessageServiceImpl implements MessageService {
         String tableName = TableUtil.getTableName(email);
         int start = (pageNum+1) * pageSize;
         List<Message> message = messageMapper.getMessageByUserIdWithPage(tableName, userId, start, pageSize);
+        List<Long> messageIdList = new ArrayList<>();
+        for (Message m : message) {
+            messageIdList.add(m.getMessageId());
+        }
         vo.set(ViewObject.ERROR, 0).set(ViewObject.DATA, JSON.toJSON(message));
         return vo;
     }
