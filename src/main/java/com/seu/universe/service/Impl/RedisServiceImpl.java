@@ -163,4 +163,19 @@ public class RedisServiceImpl implements RedisService {
                 jedis.close();
         }
     }
+
+    @Override
+    public long spopKey(String key) {
+        Jedis jedis = this.jedisPool.getResource();
+        try {
+            String res = jedis.spop(key);
+            return Long.parseLong(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (jedis != null)
+                jedis.close();
+        }
+    }
 }

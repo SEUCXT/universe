@@ -79,4 +79,11 @@ public interface RedisService {
      * @return
      */
     long delKey(String key);
+
+    /**
+     * 移除并返回集合中的一个随机元素
+     * @param key
+     * @return
+     */
+    long spopKey(String key);
 }

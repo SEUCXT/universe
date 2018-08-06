@@ -3,6 +3,8 @@ package com.seu.universe.service;
 
 import com.seu.universe.config.ViewObject;
 
+import java.sql.Timestamp;
+
 public interface LikeService {
 
     /**
@@ -12,7 +14,7 @@ public interface LikeService {
      * @param userId
      * @return
      */
-    ViewObject addLike(long messageId, long userId);
+    ViewObject addLike(long messageId, long userId, Timestamp timestamp);
 
     /**
      * 获取状态的点赞数

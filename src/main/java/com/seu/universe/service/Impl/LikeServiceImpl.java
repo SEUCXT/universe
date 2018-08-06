@@ -29,12 +29,10 @@ public class LikeServiceImpl implements LikeService {
     private LikeCntMapper likeCntMapper;
 
     @Override
-    public ViewObject addLike(long messageId, long userId) {
+    public ViewObject addLike(long messageId, long userId, Timestamp timestamp) {
         ViewObject vo = new ViewObject();
         Like like = new Like();
-        Date date = new Date();
-        Timestamp time = new Timestamp(date.getTime());
-        like.setLikeTime(time);
+        like.setLikeTime(timestamp);
         like.setMessageId(messageId);
         like.setUserId(userId);
         //int res = likeMapper.addLike(like);

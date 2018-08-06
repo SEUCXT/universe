@@ -16,4 +16,6 @@ public class Constants {
 
     public static final String WEB_ADDR = "118.25.138.163:80/";
 
+    public static final String MESSAGE_LIKE_SET = "message_set";
+
 }
