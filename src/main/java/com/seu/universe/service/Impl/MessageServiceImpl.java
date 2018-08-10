@@ -93,9 +93,9 @@ public class MessageServiceImpl implements MessageService {
             messgaIdList.add(message.get(i).getMessageId());
         }
         try {
-            CountDownLatch countDownLatch = new CountDownLatch(3);
+            CountDownLatch countDownLatch = new CountDownLatch(4);
             FutureTask<Map<Long, Long>> likeFutureTask = new FutureTask<>(new LikeTask(messgaIdList, countDownLatch));
-            // todo 这边获取转发、评论数，占用两个线程, 一共是三个线程
+            // todo 这边获取转发数、评论和评论数，占用两个线程, 一共是4个线程
             countDownLatch.await();
             Map<Long, Long> likeMap = likeFutureTask.get();
             for (int i = 0; i < message.size(); i++) {

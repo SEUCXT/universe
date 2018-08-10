@@ -1,5 +1,6 @@
 package com.seu.universe.service.Impl;
 
+import com.google.common.hash.Hashing;
 import com.seu.universe.config.Constants;
 import com.seu.universe.config.ViewObject;
 import com.seu.universe.entity.User;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -78,7 +81,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setEmail(email);
         user.setNickname(nickname);
-        user.setPassword(password);
+        user.setSalt(UUID.randomUUID().toString().substring(0, 5));
+        user.setPassword(Hashing.md5().hashUnencodedChars(password + user.getSalt()).toString());
         user.setStatus(0);
         Date date = new Date();
         Timestamp time = new Timestamp(date.getTime());
@@ -91,6 +95,29 @@ public class UserServiceImpl implements UserService {
         vo.set(ViewObject.ERROR, 0).set(ViewObject.MESSAGE, "注册成功！");
         this.rabbitTemplate.convertAndSend(Constants.EMAIL_TOPIC, email);
         return vo;
+    }
+
+    public ViewObject login(String email, String password) {
+        ViewObject vo = new ViewObject();
+        User user = userMapper.getUserByEmail(email);
+        String pwd = Hashing.md5().hashUnencodedChars(password + user.getSalt()).toString();
+        if (!pwd.equals(password)) {
+            vo.set(ViewObject.ERROR, 1).set(ViewObject.MESSAGE, "密码错误！");
+            return vo;
+        }
+        String session = genSession(user.getNickname());
+        redisService.set(email, session);
+        vo.set(ViewObject.ERROR, 0).set(ViewObject.MESSAGE, "登录成功！");
+        return vo;
+    }
+
+    private String genSession(String nickname) {
+        try {
+            return Hashing.md5().hashUnencodedChars(nickname + System.currentTimeMillis() + InetAddress.getLocalHost()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

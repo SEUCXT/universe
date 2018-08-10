@@ -32,12 +32,12 @@ public class LikeTask implements Callable<Map<Long, Long>> {
     @Override
     public Map<Long, Long> call() throws Exception {
 
-        latch.countDown();
         Map<Long, Long> resMap = new HashMap<>();
         for (long messageId : messageidList) {
             long messageLikeCnt = likeService.getMessageLikeCnt(messageId);
             resMap.put(messageId, messageLikeCnt);
         }
+        latch.countDown();
         return resMap;
     }
 

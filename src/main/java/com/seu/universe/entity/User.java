@@ -6,6 +6,7 @@ import java.util.Objects;
 public class User {
     private long userId;
     private String nickname;
+    private String salt;
     private String password;
     private String email;
     private Timestamp registerTime;
@@ -59,23 +60,12 @@ public class User {
         this.status = status;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User t_user = (User) o;
-        return userId == t_user.userId &&
-                status == t_user.status &&
-                Objects.equals(nickname, t_user.nickname) &&
-                Objects.equals(password, t_user.password) &&
-                Objects.equals(email, t_user.email) &&
-                Objects.equals(registerTime, t_user.registerTime);
+    public String getSalt() {
+        return salt;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(userId, nickname, password, email, registerTime, status);
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @Override
@@ -83,6 +73,7 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", nickname='" + nickname + '\'' +
+                ", salt='" + salt + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", registerTime=" + registerTime +
