@@ -95,6 +95,7 @@ public class MessageServiceImpl implements MessageService {
         try {
             CountDownLatch countDownLatch = new CountDownLatch(4);
             FutureTask<Map<Long, Long>> likeFutureTask = new FutureTask<>(new LikeTask(messgaIdList, countDownLatch));
+            taskExecutor.execute(likeFutureTask);
             // todo 这边获取转发数、评论和评论数，占用两个线程, 一共是4个线程
             countDownLatch.await();
             Map<Long, Long> likeMap = likeFutureTask.get();
